@@ -1,0 +1,50 @@
+.VideoElement {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
+  padding: 2rem;
+  flex-wrap: wrap;
+  /* background-color: #111; */
+  box-sizing: border-box;
+}
+
+.VideoElement button {
+  padding: 0.8rem 1.5rem;
+  border-radius: 0.6rem;
+  border: none;
+  background: linear-gradient(135deg, #4a4a4a, #2c2c2c);
+  color: #fff;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.VideoElement button:hover {
+  background: linear-gradient(135deg, #666, #3a3a3a);
+  transform: scale(1.03);
+}
+
+.user-video-feed {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 1rem;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+/* Mobile View */
+@media (max-width: 600px) {
+  .VideoElement {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .VideoElement button {
+    width: 100%;
+    text-align: center;
+  }
+}
