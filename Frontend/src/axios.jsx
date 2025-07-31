@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL =
   process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000/'
+    ? 'http://localhost:3000'
     : 'https://moody-player-xpvk.onrender.com'; // render wala url yha dena
 
 const axiosInstance = axios.create({
