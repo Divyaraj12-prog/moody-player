@@ -8,7 +8,7 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:3000',
-  'https://moody-player-tawny.vercel.app/'
+  'https://moody-player-tawny.vercel.app'
 ];
 
 app.use(cors({
