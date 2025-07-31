@@ -31,7 +31,7 @@ const MoodSongs = ({ Songs }) => {
                             isPlaying === index &&
                             <audio
                                 src={song.audio} style={{
-                                    display: 'none'
+                                    // display: 'none'
                                 }}
                                 autoPlay={isPlaying === index}
                             ></audio>
