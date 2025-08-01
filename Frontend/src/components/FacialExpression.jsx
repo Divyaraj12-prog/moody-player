@@ -43,7 +43,7 @@ export default function FacialExpression({ setSongs }) {
         try {
             const response = await axiosInstance.get(`/songs?mood=${_expression}`);
             console.log(response.data);
-            setSongs(response.data.songs);
+            setSongs(response.data?.songs || []);
         } catch (error) {
             console.error("Failed to fetch songs:", error);
         }
