@@ -44,6 +44,8 @@ const MoodSongs = ({ Songs }) => {
                 </div >
             ))}
             </div>
+            
     )
+    console.log("Songs received in MoodSongs:", Songs);
 }
 export default MoodSongs
