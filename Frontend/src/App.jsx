@@ -9,7 +9,7 @@ function App() {
 
   return (
     <>
-      <FacialExpression setSongs={Songs} />
+      <FacialExpression setSongs={setSongs} />
       <MoodSongs Songs={Songs} />
     </>
   )
