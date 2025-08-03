@@ -1,67 +1,69 @@
 import React, { useEffect, useRef } from 'react';
 import * as faceapi from 'face-api.js';
-import "./FacialExpression.css";
-import axiosInstance from "../axios.jsx";
+import './FacialExpression.css';
+import axiosInstance from '../axios.jsx';
 
 export default function FacialExpression({ setSongs }) {
-    const videoRef = useRef();
+  const videoRef = useRef();
 
-    const loadModels = async () => {
-        const MODEL_URL = './models';
-        await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
-        await faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL);
-    };
+  const loadModels = async () => {
+    const MODEL_URL = './models';
+    await faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL);
+    await faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL);
+  };
 
-    const startVideo = () => {
-        navigator.mediaDevices.getUserMedia({ video: true })
-            .then((stream) => {
-                videoRef.current.srcObject = stream;
-            })
-            .catch((err) => console.error("Error accessing webcam: ", err));
-    };
+  const startVideo = () => {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((stream) => {
+        videoRef.current.srcObject = stream;
+      })
+      .catch((err) => console.error("Webcam error: ", err));
+  };
 
-    async function detectMood() {
-        const detections = await faceapi
-            .detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions())
-            .withFaceExpressions();
-        
-        if (!detections || detections.length === 0) {
-            console.log("No face detected");
-            return;
-        }
+  const detectMood = async () => {
+    const detections = await faceapi
+      .detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions())
+      .withFaceExpressions();
 
-        let mostProableExpression = 0;
-        let _expression = '';
-
-        for (const expression of Object.keys(detections[0].expressions)) {
-            if (detections[0].expressions[expression] > mostProableExpression) {
-                mostProableExpression = detections[0].expressions[expression];
-                _expression = expression;
-            }
-        }
-
-        try {
-            const response = await axiosInstance.get(`/songs?mood=${_expression}`);
-            console.log(response.data);
-            setSongs(response.data?.songs || []);
-        } catch (error) {
-            console.error("Failed to fetch songs:", error);
-        }
+    if (!detections || detections.length === 0) {
+      console.log("No face detected");
+      return;
     }
 
-    useEffect(() => {
-        loadModels().then(startVideo);
-    }, []);
+    let highestValue = 0;
+    let mood = '';
 
-    return (
-        <div className='VideoElement'>
-            <video
-                ref={videoRef}
-                autoPlay
-                muted
-                className='user-video-feed'
-            />
-            <button onClick={detectMood}>Detect Mood</button>
-        </div>
-    );
-} 
+    for (const [expression, value] of Object.entries(detections[0].expressions)) {
+      if (value > highestValue) {
+        highestValue = value;
+        mood = expression;
+      }
+    }
+
+    console.log("Detected mood:", mood);
+
+    try {
+      const response = await axiosInstance.get(`/songs?mood=${mood}`);
+      console.log("Fetched songs:", response.data?.songs);
+      setSongs(response.data?.songs || []);
+    } catch (error) {
+      console.error("Error fetching songs:", error);
+    }
+  };
+
+  useEffect(() => {
+    loadModels().then(startVideo);
+  }, []);
+
+  return (
+    <div className='VideoElement'>
+      <video
+        ref={videoRef}
+        autoPlay
+        muted
+        className='user-video-feed'
+      />
+      <button onClick={detectMood}>Detect Mood</button>
+    </div>
+  );
+}
