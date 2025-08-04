@@ -35,6 +35,16 @@
   box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
+.overlay-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 720px;
+  z-index: 10;
+  pointer-events: none;
+}
+
 /* Mobile View */
 @media (max-width: 600px) {
   .VideoElement {
