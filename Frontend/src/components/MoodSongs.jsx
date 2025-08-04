@@ -24,6 +24,7 @@ const MoodSongs = ({ Songs }) => {
             <div className="title">
               <h3>{song.title}</h3>
               <p>{song.artist}</p>
+              <p>{song.mood}</p>
             </div>
             <div className="play-pause-button">
               {isPlaying === index &&
