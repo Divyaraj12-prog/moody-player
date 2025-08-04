@@ -72,6 +72,7 @@ export default function FacialExpression({ setSongs }) {
 
   return (
     <div className='VideoElement' style={{ position: 'relative' }}>
+      <div style={{ position: 'relative', width: '100%', maxWidth: '400px' }}>
       <video
         ref={videoRef}
         autoPlay
@@ -103,6 +104,7 @@ export default function FacialExpression({ setSongs }) {
         }}
       />
       <canvas ref={canvasRef} className='overlay-canvas' />
+      </div>
       <button onClick={detectMood}>Detect Mood</button>
     </div>
   );
