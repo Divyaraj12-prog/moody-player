@@ -23,7 +23,7 @@ router.post('/songs', upload.single('audio'), async (req, res) => {
 
         res.status(201).json({
             message: 'Song created successfully',
-            song
+            song:song
         });
     } catch (error) {
         console.error("Error uploading song:", error);
@@ -39,7 +39,7 @@ router.get('/songs', async (req, res) => {
 
         res.status(200).json({
             message: "Songs fetched successfully",
-            songs
+            songs:songs
         });
     } catch (error) {
         console.error("Error fetching songs:", error);
